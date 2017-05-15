@@ -1,0 +1,35 @@
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class MainWindow extends JFrame implements ActionListener{
+
+	private JButton startButton;
+	ConfigServer server;
+	MainWindow(){
+		super("Dyna Blaster Server");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setPreferredSize(new Dimension(100,100));
+		server=null;
+		startButton=new JButton("start");
+		startButton.addActionListener(this);
+		add(startButton);
+		pack();
+		setVisible(true);
+	}
+	
+	public void turnON(){
+		server= new ConfigServer();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		turnON();
+		
+	}
+
+	
+}

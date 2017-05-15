@@ -1,0 +1,69 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+interface ServerStatusListener {
+	void updateStatus(String str);
+}
+
+public class ConfigServer implements Runnable{
+	
+	ServerStatusListener listener;
+	ConfigServer(){
+		listener=null;
+	}
+	
+	public void addListener(ServerStatusListener listener){
+		this.listener=listener;
+	}
+	
+	public void start() throws IOException 
+	{
+		ServerSocket serverSocket=null;
+		
+		try{
+			serverSocket=new ServerSocket(10008);
+		}
+		catch(IOException e)
+		{
+			listener.updateStatus("Could not listen on port 10008.");
+		}
+		
+		System.out.println("Waiting for connection...");
+		while(true){
+			try {
+				Socket clientSocket=serverSocket.accept();
+				Runnable r=new ClientHandler(clientSocket);
+				Thread t=new Thread(r);
+				t.start();
+			}
+			catch(IOException e)
+			{
+				System.err.println("Accept failed.");
+				System.exit(1);
+			}
+			System.out.println("Connection succesful");
+			System.out.println("waiting for input...");
+			
+			
+			
+			
+		}
+	}
+	public void callUpdateStatusListener(String str){
+		listener.updateStatus(str);
+	}
+
+	@Override
+	public void run(){
+		try {
+			start();
+			callUpdateStatusListener("running");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			callUpdateStatusListener(e.getMessage());
+		}
+		
+	}
+}
