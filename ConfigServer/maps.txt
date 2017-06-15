@@ -1,5 +1,5 @@
-map1.txt
-map2.txt
-map3.txt
-map4.txt
-map5.txt
+map1
+map2
+map3
+map4
+map5

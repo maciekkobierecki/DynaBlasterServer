@@ -15,4 +15,8 @@
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
 <fullyQualifiedTypeName name="java.awt.GridLayout"/>
 <fullyQualifiedTypeName name="javax.swing.JTextField"/>
+<fullyQualifiedTypeName name="defaultpackage.PlayerIsDeadListener"/>
+<fullyQualifiedTypeName name="defaultpackage.Config"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
 </qualifiedTypeNameHistroy>

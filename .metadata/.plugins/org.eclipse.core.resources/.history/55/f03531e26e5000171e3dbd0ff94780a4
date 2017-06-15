@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
+
+public class ClientHandler implements Runnable {
+
+	private Socket incoming;
+	ClientHandler(Socket socket){
+		incoming=socket;
+	}
+	@Override
+	public void run() {
+		try
+		{
+			try
+			{
+				InputStream inStream=incoming.getInputStream();
+				OutputStream outStream=incoming.getOutputStream();
+				
+				Scanner in=new Scanner(inStream);
+				PrintWriter out=new PrintWriter(outStream,true);
+				
+				while(in.hasNextLine()){
+					String line=in.nextLine();
+					
+					if(line=="GET CONFIG PROPERTIES")
+						sendTextFromFile(out, "config.properties.txt");						
+					else if(line=="GET MAPLIST")
+						sendTextFromFile(out, "maps.txt");						
+					else if(line=="GET HIGHSCORES")
+						sendTextFromFile(out, "highscores.txt");						
+					else if(line=="GET LEVEL INFO")
+						sendTextFromFile(out, line);	
+					
+				}
+				out.close();
+			}
+			finally
+			{
+				System.out.println("closing");
+				incoming.close();				
+			}
+			
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public void sendTextFromFile(PrintWriter out, String fileName){
+		try(BufferedReader br=new BufferedReader(new FileReader(fileName))) {
+			String line;
+			while((line=br.readLine())!=null){
+				out.println(line);
+			}
+			out.close();
+		}
+		catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+
+}

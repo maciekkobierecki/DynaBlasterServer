@@ -1,0 +1,5 @@
+1495025781705	Rename type 'GameOverListener'
+1495025945120	Rename method 'callGameOverListeners'
+1495025972618	Rename field 'gameOverListeners'
+1495025993141	Rename method 'addGameOverListener'
+1495088339522	Rename field 'pointsForKillEnemy'
